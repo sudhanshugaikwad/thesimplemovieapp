@@ -10,13 +10,13 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-export const MovieTrailerInputSchema = z.object({
+const MovieTrailerInputSchema = z.object({
   title: z.string().describe('The title of the movie.'),
   year: z.string().describe('The release year of the movie.'),
 });
 export type MovieTrailerInput = z.infer<typeof MovieTrailerInputSchema>;
 
-export const MovieTrailerOutputSchema = z.object({
+const MovieTrailerOutputSchema = z.object({
   youtubeVideoId: z.string().optional().describe('The YouTube video ID for the official movie trailer.'),
   recommendation: z.object({
     title: z.string().describe('The title of a similar movie.'),

@@ -3,7 +3,7 @@ import { getMovieById } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Star, Film, Calendar, Clock } from 'lucide-react';
-import { FavoriteButton } from './FavoriteButton';
+import { FavoriteButton } from '../FavoriteButton';
 
 export default async function MovieDetailsPage({ params }: { params: { id: string } }) {
   const movie = await getMovieById(params.id);

@@ -11,7 +11,7 @@ export function GenreFilter() {
   const currentGenre = searchParams.get('query') || '';
 
   const handleGenreChange = (genre: string) => {
-    if (genre) {
+    if (genre && genre !== "all") {
       router.push(`/?query=${encodeURIComponent(genre)}`);
     } else {
       router.push('/');
@@ -24,7 +24,7 @@ export function GenreFilter() {
         <SelectValue placeholder="Filter by Genre" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="">All Genres</SelectItem>
+        <SelectItem value="all">All Genres</SelectItem>
         {genres.map((genre) => (
           <SelectItem key={genre} value={genre}>{genre}</SelectItem>
         ))}

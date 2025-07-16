@@ -6,6 +6,7 @@ import { Star } from 'lucide-react';
 import { FavoriteButton } from '../FavoriteButton';
 import { AiCriticReview } from './AiCriticReview';
 import { Separator } from '@/components/ui/separator';
+import { MovieTrailer } from './MovieTrailer';
 
 export default async function MovieDetailsPage({ params }: { params: { id: string } }) {
   const movie = await getMovieById(params.id);
@@ -61,6 +62,10 @@ export default async function MovieDetailsPage({ params }: { params: { id: strin
                     <FavoriteButton movie={movieForFav} />
                 </div>
                 
+                <Separator />
+                
+                <MovieTrailer title={movie.Title} year={movie.Year} />
+
                 <Separator />
 
                 <div>

@@ -16,6 +16,7 @@ export interface MovieSearchResult {
 export interface MovieDetails extends Movie {
   Rated: string;
   Released: string;
+
   Runtime: string;
   Genre: string;
   Director: string;
@@ -36,7 +37,6 @@ export interface MovieDetails extends Movie {
 }
 
 export interface FavoriteMovie {
-  userId: string;
   movieId: string;
   title: string;
   poster: string;

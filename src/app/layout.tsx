@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/theme-provider';
-import { AuthProvider } from '@/hooks/useAuth';
 import { Toaster } from '@/components/ui/toaster';
 import { Navbar } from '@/components/Navbar';
-import { AuthHandler } from '@/components/AuthHandler';
 import { Inter } from 'next/font/google';
 import { Roboto_Slab } from 'next/font/google';
+import { FavoritesProvider } from '@/hooks/useFavorites';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,14 +32,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${robotoSlab.variable}`}>
       <body className="font-body antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <AuthProvider>
-            <AuthHandler />
+          <FavoritesProvider>
             <div className="relative flex min-h-screen flex-col">
               <Navbar />
               <div className="flex-1">{children}</div>
             </div>
             <Toaster />
-          </AuthProvider>
+          </FavoritesProvider>
         </ThemeProvider>
       </body>
     </html>

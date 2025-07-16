@@ -6,9 +6,7 @@ import { Heart, Star } from "lucide-react"
 import type { Movie } from "@/types"
 import { cn } from "@/lib/utils"
 import { useFavorites } from "@/hooks/useFavorites"
-import { useAuth } from "@/hooks/useAuth"
 import { useToast } from "@/hooks/use-toast"
-import { useRouter } from "next/navigation"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "./ui/skeleton"
@@ -18,8 +16,6 @@ interface MovieCardProps {
 }
 
 export function MovieCard({ movie }: MovieCardProps) {
-  const { user } = useAuth()
-  const router = useRouter()
   const { toast } = useToast()
   const { isFavorite, addFavorite, removeFavorite } = useFavorites()
   
@@ -27,15 +23,6 @@ export function MovieCard({ movie }: MovieCardProps) {
 
   const handleFavoriteToggle = async (e: React.MouseEvent) => {
     e.preventDefault()
-    if (!user) {
-      toast({
-        title: "Login Required",
-        description: "Please login to add movies to your favorites.",
-        variant: "destructive"
-      })
-      router.push('/login')
-      return
-    }
 
     if (isFav) {
       await removeFavorite(movie.imdbID)

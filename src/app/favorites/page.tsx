@@ -1,24 +1,13 @@
 "use client"
 
-import { useAuth } from "@/hooks/useAuth"
 import { useFavorites } from "@/hooks/useFavorites"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 import { MovieCard, MovieCardSkeleton } from "@/components/MovieCard"
 import type { Movie } from "@/types"
 
 export default function FavoritesPage() {
-  const { user, loading: authLoading } = useAuth()
-  const { favorites, loading: favLoading } = useFavorites()
-  const router = useRouter()
+  const { favorites, loading } = useFavorites()
 
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push("/login")
-    }
-  }, [user, authLoading, router])
-
-  if (authLoading || favLoading) {
+  if (loading) {
     return (
         <div className="container py-8">
             <h1 className="text-4xl font-bold mb-8 text-center font-headline">My Favorites</h1>

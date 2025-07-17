@@ -49,42 +49,34 @@ export default function RootLayout({
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <ActiveLink href="/">
-                      {(isActive) => (
-                        <SidebarMenuButton tooltip="Home" isActive={isActive}>
-                          <Home />
-                          <span>Home</span>
-                        </SidebarMenuButton>
-                      )}
+                      <SidebarMenuButton tooltip="Home">
+                        <Home />
+                        <span>Home</span>
+                      </SidebarMenuButton>
                     </ActiveLink>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                      <ActiveLink href="/movies">
-                       {(isActive) => (
-                        <SidebarMenuButton tooltip="Movies" isActive={isActive}>
+                        <SidebarMenuButton tooltip="Movies">
                           <Clapperboard />
                           <span>Movies</span>
                         </SidebarMenuButton>
-                       )}
                     </ActiveLink>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                      <ActiveLink href="/series">
-                       {(isActive) => (
-                        <SidebarMenuButton tooltip="TV Series" isActive={isActive}>
+                        <SidebarMenuButton tooltip="TV Series">
                           <Tv />
                           <span>TV Series</span>
                         </SidebarMenuButton>
-                       )}
                     </ActiveLink>
                   </SidebarMenuItem>
                    <SidebarMenuItem>
                      <ActiveLink href="/search">
-                       {(isActive) => (
-                        <SidebarMenuButton tooltip="Search" isActive={isActive}>
+                        <SidebarMenuButton tooltip="Search">
                           <Search />
                           <span>Search</span>
                         </SidebarMenuButton>
-                      )}
                     </ActiveLink>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -92,12 +84,10 @@ export default function RootLayout({
                   <SidebarMenu>
                     <SidebarMenuItem>
                       <ActiveLink href="/favorites">
-                         {(isActive) => (
-                          <SidebarMenuButton tooltip="Favorites" isActive={isActive}>
+                          <SidebarMenuButton tooltip="Favorites">
                             <Star />
                             <span>Favorites</span>
                           </SidebarMenuButton>
-                         )}
                       </ActiveLink>
                     </SidebarMenuItem>
                   </SidebarMenu>

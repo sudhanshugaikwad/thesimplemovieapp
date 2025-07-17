@@ -2,27 +2,25 @@
 
 import Link, { type LinkProps } from "next/link"
 import { usePathname } from "next/navigation"
-import { cloneElement, isValidElement } from "react"
+import * as React from "react"
 
 type ActiveLinkProps = LinkProps & {
-  children: (props: { isActive: boolean }) => React.ReactNode
+  children: React.ReactNode;
 }
 
 export function ActiveLink({ children, ...props }: ActiveLinkProps) {
   const pathname = usePathname()
   const isActive = pathname === props.href
 
-  const child = children({ isActive });
+  const child = React.Children.only(children)
 
-  if (!isValidElement(child)) {
+  if (!React.isValidElement(child)) {
     return null;
   }
   
   return (
-    <Link {...props} legacyBehavior passHref>
-      {cloneElement(child, {
-        "data-active": isActive,
-      })}
+    <Link {...props}>
+      {React.cloneElement(child, { "data-active": isActive, isActive: isActive })}
     </Link>
   )
 }

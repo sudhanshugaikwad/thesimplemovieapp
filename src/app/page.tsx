@@ -1,67 +1,100 @@
-import { Suspense } from 'react';
 import { searchMovies } from '@/lib/api';
 import { MovieCard, MovieCardSkeleton } from '@/components/MovieCard';
-import { Pagination } from '@/components/Pagination';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
-import { redirect } from 'next/navigation';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import type { Movie } from '@/types';
 
-async function handleSearch(formData: FormData) {
-  'use server';
-  const query = formData.get('query') as string;
-  redirect(`/?query=${encodeURIComponent(query)}`);
-}
-
-export default async function Home({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}) {
-  const query = searchParams?.query || 'Batman';
-  const page = Number(searchParams?.page) || 1;
-
-  const moviesData = await searchMovies(query, page);
+async function MovieCarousel({ title, query }: { title: string, query: string }) {
+  const moviesData = await searchMovies(query, 1);
   const movies = moviesData.Search || [];
-  const totalResults = Number(moviesData.totalResults) || 0;
+
+  if (movies.length === 0) return null;
 
   return (
-    <main className="container py-8 animate-fade-in">
-      <h1 className="text-4xl font-bold mb-2 text-center font-headline">Welcome to CineFile</h1>
-      <p className="text-lg text-muted-foreground mb-8 text-center">Your ultimate movie guide.</p>
+    <section className="py-8">
+      <h2 className="text-2xl font-bold font-headline mb-4 px-4 md:px-6">{title}</h2>
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="w-full"
+      >
+        <CarouselContent className="-ml-4">
+          {movies.map((movie) => (
+            <CarouselItem key={movie.imdbID} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6 pl-4">
+              <MovieCard movie={movie} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="ml-12" />
+        <CarouselNext className="mr-12" />
+      </Carousel>
+    </section>
+  )
+}
 
-      <div className="flex justify-center mb-8">
-        <form action={handleSearch} className="flex-grow max-w-xl flex items-center relative">
-          <Input
-            type="search"
-            name="query"
-            placeholder="Search for movies..."
-            defaultValue={query}
-            className="pl-10 h-12 text-base"
-          />
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        </form>
-      </div>
+async function HeroCarousel() {
+    const moviesData = await searchMovies("fast", 1);
+    const heroMovies: Movie[] = (moviesData.Search || []).slice(0, 5).map(m => ({...m, Poster: m.Poster.replace("SX300", "SX1200")}));
 
-      {movies.length > 0 ? (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            <Suspense fallback={[...Array(10)].map((_, i) => <MovieCardSkeleton key={i} />)}>
-              {movies.map((movie) => (
-                <MovieCard key={movie.imdbID} movie={movie} />
-              ))}
-            </Suspense>
-          </div>
-          <Pagination totalResults={totalResults} />
-        </>
-      ) : (
-        <div className="text-center py-20">
-          <h2 className="text-2xl font-semibold">No Movies Found</h2>
-          <p className="text-muted-foreground mt-2">Try a different search term.</p>
+    if (heroMovies.length === 0) {
+        return <div className="h-[60vh] flex items-center justify-center bg-muted"><p>Could not load featured movies.</p></div>
+    }
+
+    return (
+      <Carousel className="w-full"
+        opts={{
+          loop: true,
+        }}
+        >
+        <CarouselContent>
+          {heroMovies.map((movie) => (
+            <CarouselItem key={movie.imdbID}>
+              <div className="w-full h-[40vh] md:h-[60vh] relative">
+                <Image
+                  src={movie.Poster !== "N/A" ? movie.Poster : "https://placehold.co/1200x600.png"}
+                  alt={`Poster for ${movie.Title}`}
+                  fill
+                  className="object-cover"
+                  data-ai-hint="movie poster"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-8 md:p-12">
+                  <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4">{movie.Title}</h1>
+                   <Button asChild size="lg">
+                        <Link href={`/movies/${movie.imdbID}`}>Watch Now</Link>
+                    </Button>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-4" />
+        <CarouselNext className="right-4" />
+      </Carousel>
+    )
+}
+
+
+export default async function Home() {
+
+  return (
+    <main className="animate-fade-in">
+        <HeroCarousel />
+        <div className="container mx-auto">
+            <MovieCarousel title="Now Playing" query="action" />
+            <MovieCarousel title="Upcoming Movies" query="sci-fi" />
+            <MovieCarousel title="Popular Movies" query="comedy" />
         </div>
-      )}
     </main>
   );
 }

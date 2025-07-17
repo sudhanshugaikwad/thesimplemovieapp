@@ -20,7 +20,7 @@ export function Header() {
               type="search"
               name="query"
               placeholder="Search for movies..."
-              className="pl-8 sm:w-64"
+              className="pl-8 sm:w-64 md:w-80"
             />
           </form>
         </div>

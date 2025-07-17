@@ -1,5 +1,5 @@
 import { searchMovies } from '@/lib/api';
-import { MovieCard, MovieCardSkeleton } from '@/components/MovieCard';
+import { MovieCard } from '@/components/MovieCard';
 import {
   Carousel,
   CarouselContent,
@@ -35,8 +35,8 @@ async function MovieCarousel({ title, query }: { title: string, query: string })
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="ml-12" />
-        <CarouselNext className="mr-12" />
+        <CarouselPrevious className="ml-14" />
+        <CarouselNext className="mr-14" />
       </Carousel>
     </section>
   )

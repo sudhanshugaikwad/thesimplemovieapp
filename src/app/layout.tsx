@@ -4,12 +4,13 @@ import { ThemeProvider } from '@/components/providers/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { Inter } from 'next/font/google';
 import { Roboto_Slab } from 'next/font/google';
-import { FavoritesProvider } from '@/hooks/useFavorites';
+import { FavoritesProvider } from '@/hooks/useFavorites.tsx';
 import { Sidebar, SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Header } from '@/components/Header';
 import Link from 'next/link';
 import { Clapperboard, Home, Tv, Search, Star } from 'lucide-react';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar';
+import { ActiveLink } from '@/components/ui/active-link';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -47,37 +48,57 @@ export default function RootLayout({
                 </SidebarHeader>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton href="/" tooltip="Home" isActive>
-                      <Home />
-                      <span>Home</span>
-                    </SidebarMenuButton>
+                    <ActiveLink href="/">
+                      {(isActive) => (
+                        <SidebarMenuButton tooltip="Home" isActive={isActive}>
+                          <Home />
+                          <span>Home</span>
+                        </SidebarMenuButton>
+                      )}
+                    </ActiveLink>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton href="/" tooltip="Movies">
-                      <Clapperboard />
-                      <span>Movies</span>
-                    </SidebarMenuButton>
+                     <ActiveLink href="/movies">
+                       {(isActive) => (
+                        <SidebarMenuButton tooltip="Movies" isActive={isActive}>
+                          <Clapperboard />
+                          <span>Movies</span>
+                        </SidebarMenuButton>
+                       )}
+                    </ActiveLink>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton href="/" tooltip="TV Series">
-                      <Tv />
-                      <span>TV Series</span>
-                    </SidebarMenuButton>
+                     <ActiveLink href="/series">
+                       {(isActive) => (
+                        <SidebarMenuButton tooltip="TV Series" isActive={isActive}>
+                          <Tv />
+                          <span>TV Series</span>
+                        </SidebarMenuButton>
+                       )}
+                    </ActiveLink>
                   </SidebarMenuItem>
                    <SidebarMenuItem>
-                    <SidebarMenuButton href="/" tooltip="Search">
-                      <Search />
-                      <span>Search</span>
-                    </SidebarMenuButton>
+                     <ActiveLink href="/search">
+                       {(isActive) => (
+                        <SidebarMenuButton tooltip="Search" isActive={isActive}>
+                          <Search />
+                          <span>Search</span>
+                        </SidebarMenuButton>
+                      )}
+                    </ActiveLink>
                   </SidebarMenuItem>
                 </SidebarMenu>
                 <SidebarFooter>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton href="/favorites" tooltip="Favorites">
-                        <Star />
-                        <span>Favorites</span>
-                      </SidebarMenuButton>
+                      <ActiveLink href="/favorites">
+                         {(isActive) => (
+                          <SidebarMenuButton tooltip="Favorites" isActive={isActive}>
+                            <Star />
+                            <span>Favorites</span>
+                          </SidebarMenuButton>
+                         )}
+                      </ActiveLink>
                     </SidebarMenuItem>
                   </SidebarMenu>
                 </SidebarFooter>

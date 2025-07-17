@@ -18,9 +18,5 @@ export function ActiveLink({ children, ...props }: ActiveLinkProps) {
     return null;
   }
   
-  return (
-    <Link {...props}>
-      {React.cloneElement(child, { "data-active": isActive, isActive: isActive })}
-    </Link>
-  )
+  return React.cloneElement(child, { "data-active": isActive, isActive: isActive, href: props.href, asChild: false })
 }

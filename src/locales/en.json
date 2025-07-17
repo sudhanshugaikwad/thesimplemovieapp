@@ -44,5 +44,11 @@
     "awards": "Awards",
     "aiCriticTake": "AI Critic's Take",
     "addedToFavorites": "Added to favorites.",
-    "removedFromFavorites": "Removed from favorites."
+    "removedFromFavorites": "Removed from favorites.",
+    "checkYourEmail": "Check your email",
+    "signInLinkSent": "A sign-in link has been sent to {email}.",
+    "promptEmail": "Please provide your email for confirmation",
+    "signInSuccessTitle": "Successfully signed in!",
+    "signInSuccessDescription": "Welcome back, {email}",
+    "signInFailedTitle": "Sign in failed"
 }

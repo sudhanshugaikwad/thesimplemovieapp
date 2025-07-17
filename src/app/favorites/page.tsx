@@ -3,14 +3,16 @@
 import { useFavorites } from "@/hooks/useFavorites"
 import { MovieCard, MovieCardSkeleton } from "@/components/MovieCard"
 import type { Movie } from "@/types"
+import { useTranslation } from "@/hooks/useTranslation"
 
 export default function FavoritesPage() {
   const { favorites, loading } = useFavorites()
+  const { t } = useTranslation();
 
   if (loading) {
     return (
         <div className="container py-8">
-            <h1 className="text-4xl font-bold mb-8 text-center font-headline">My Favorites</h1>
+            <h1 className="text-4xl font-bold mb-8 text-center font-headline">{t('myFavorites')}</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {[...Array(5)].map((_, i) => <MovieCardSkeleton key={i} />)}
             </div>
@@ -28,7 +30,7 @@ export default function FavoritesPage() {
 
   return (
     <main className="container py-8 animate-fade-in">
-      <h1 className="text-4xl font-bold mb-8 text-center font-headline">My Favorites</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center font-headline">{t('myFavorites')}</h1>
       {favoriteMovies.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {favoriteMovies.map((movie) => (
@@ -37,9 +39,9 @@ export default function FavoritesPage() {
         </div>
       ) : (
         <div className="text-center py-20">
-          <h2 className="text-2xl font-semibold">No Favorites Yet</h2>
+          <h2 className="text-2xl font-semibold">{t('noFavoritesYet')}</h2>
           <p className="text-muted-foreground mt-2">
-            Start exploring and add some movies to your collection!
+            {t('startExploring')}
           </p>
         </div>
       )}

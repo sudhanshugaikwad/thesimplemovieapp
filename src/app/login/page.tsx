@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Clapperboard } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -21,6 +22,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,8 +41,8 @@ export default function LoginPage() {
       await sendSignInLinkToEmail(auth, values.email, actionCodeSettings);
       window.localStorage.setItem('emailForSignIn', values.email);
       toast({
-        title: "Check your email",
-        description: `A sign-in link has been sent to ${values.email}.`,
+        title: t('checkYourEmail'),
+        description: t('signInLinkSent', { email: values.email }),
       });
       setSubmitted(true);
     } catch (error: any) {
@@ -61,15 +63,15 @@ export default function LoginPage() {
           <div className="mx-auto mb-4">
              <Clapperboard className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-bold">Sign In to CineFile</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('signInToCinefile')}</CardTitle>
           <CardDescription>
-            {submitted ? "Check your inbox for the magic link." : "Enter your email to receive a magic link to sign in."}
+            {submitted ? t('checkInbox') : t('enterEmailMagicLink')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {submitted ? (
             <div className="text-center p-4 bg-muted rounded-md">
-              <p>Please check your email and click the link to complete the sign-in process. You can close this tab.</p>
+              <p>{t('checkEmailToComplete')}</p>
             </div>
           ) : (
             <Form {...form}>
@@ -79,7 +81,7 @@ export default function LoginPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t('email')}</FormLabel>
                       <FormControl>
                         <Input placeholder="name@example.com" {...field} />
                       </FormControl>
@@ -88,7 +90,7 @@ export default function LoginPage() {
                   )}
                 />
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Sending..." : "Send Magic Link"}
+                  {loading ? t('sending') : t('sendMagicLink')}
                 </Button>
               </form>
             </Form>

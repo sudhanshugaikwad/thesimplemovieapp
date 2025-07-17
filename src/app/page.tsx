@@ -51,7 +51,8 @@ async function HeroCarousel() {
     }
 
     return (
-      <Carousel className="w-full"
+      <Carousel 
+        className="w-full group"
         opts={{
           loop: true,
         }}
@@ -66,10 +67,11 @@ async function HeroCarousel() {
                   fill
                   className="object-cover"
                   data-ai-hint="movie poster"
+                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-8 md:p-12">
-                  <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4">{movie.Title}</h1>
+                  <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4 text-shadow-lg shadow-black/50">{movie.Title}</h1>
                    <Button asChild size="lg">
                         <Link href={`/movies/${movie.imdbID}`}>Watch Now</Link>
                     </Button>
@@ -78,8 +80,8 @@ async function HeroCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-4" />
-        <CarouselNext className="right-4" />
+        <CarouselPrevious className="left-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+        <CarouselNext className="right-4 opacity-0 group-hover:opacity-100 transition-opacity" />
       </Carousel>
     )
 }

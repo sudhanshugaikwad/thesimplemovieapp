@@ -10,15 +10,28 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useTranslation } from "@/hooks/useTranslation"
 
 const languages = [
-  "English", "Hindi", "Marathi", "Telugu", "Kannada", 
-  "Japanese", "Korean", "Spanish", "French", "German", 
-  "Mandarin", "Russian", "Portuguese", "Arabic", "Bengali"
+  { code: "en", name: "English" },
+  { code: "hi", name: "Hindi" },
+  { code: "mr", name: "Marathi" },
+  { code: "te", name: "Telugu" },
+  { code: "kn", name: "Kannada" },
+  { code: "ja", name: "Japanese" },
+  { code: "ko", name: "Korean" },
+  { code: "es", name: "Spanish" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "zh", name: "Mandarin" },
+  { code: "ru", name: "Russian" },
+  { code: "pt", name: "Portuguese" },
+  { code: "ar", name: "Arabic" },
+  { code: "bn", name: "Bengali" }
 ]
 
 export function LanguageSwitcher() {
-  const [language, setLanguage] = React.useState("English")
+  const { setLanguage } = useTranslation();
 
   return (
     <DropdownMenu>
@@ -30,8 +43,8 @@ export function LanguageSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {languages.map((lang) => (
-          <DropdownMenuItem key={lang} onClick={() => setLanguage(lang)}>
-            {lang}
+          <DropdownMenuItem key={lang.code} onClick={() => setLanguage(lang.code)}>
+            {lang.name}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

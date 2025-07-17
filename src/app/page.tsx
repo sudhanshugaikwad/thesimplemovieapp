@@ -1,3 +1,4 @@
+"use client"
 import { searchMovies } from '@/lib/api';
 import { MovieCard } from '@/components/MovieCard';
 import {
@@ -11,10 +12,20 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import type { Movie } from '@/types';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useEffect, useState } from 'react';
 
-async function MovieCarousel({ title, query }: { title: string, query: string }) {
-  const moviesData = await searchMovies(query, 1);
-  const movies = moviesData.Search || [];
+function MovieCarousel({ title, query }: { title: string, query: string }) {
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    async function fetchMovies() {
+      const moviesData = await searchMovies(query, 1);
+      setMovies(moviesData.Search || []);
+    }
+    fetchMovies();
+  }, [query]);
+
 
   if (movies.length === 0) return null;
 
@@ -42,9 +53,18 @@ async function MovieCarousel({ title, query }: { title: string, query: string })
   )
 }
 
-async function HeroCarousel() {
-    const moviesData = await searchMovies("fast", 1);
-    const heroMovies: Movie[] = (moviesData.Search || []).slice(0, 5).map(m => ({...m, Poster: m.Poster.replace("SX300", "SX1200")}));
+function HeroCarousel() {
+    const { t } = useTranslation();
+    const [heroMovies, setHeroMovies] = useState<Movie[]>([]);
+
+    useEffect(() => {
+      async function fetchHeroMovies() {
+        const moviesData = await searchMovies("fast", 1);
+        const movies: Movie[] = (moviesData.Search || []).slice(0, 5).map(m => ({...m, Poster: m.Poster.replace("SX300", "SX1200")}));
+        setHeroMovies(movies);
+      }
+      fetchHeroMovies();
+    }, []);
 
     if (heroMovies.length === 0) {
         return <div className="h-[60vh] flex items-center justify-center bg-muted"><p>Could not load featured movies.</p></div>
@@ -73,7 +93,7 @@ async function HeroCarousel() {
                 <div className="absolute bottom-0 left-0 p-8 md:p-12">
                   <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4 text-shadow-lg shadow-black/50">{movie.Title}</h1>
                    <Button asChild size="lg">
-                        <Link href={`/movies/${movie.imdbID}`}>Watch Now</Link>
+                        <Link href={`/movies/${movie.imdbID}`}>{t('watchNow')}</Link>
                     </Button>
                 </div>
               </div>
@@ -87,15 +107,16 @@ async function HeroCarousel() {
 }
 
 
-export default async function Home() {
+export default function Home() {
+  const { t } = useTranslation();
 
   return (
     <main className="animate-fade-in">
         <HeroCarousel />
         <div className="container mx-auto">
-            <MovieCarousel title="Now Playing" query="action" />
-            <MovieCarousel title="Upcoming Movies" query="sci-fi" />
-            <MovieCarousel title="Popular Movies" query="comedy" />
+            <MovieCarousel title={t('nowPlaying')} query="action" />
+            <MovieCarousel title={t('upcomingMovies')} query="sci-fi" />
+            <MovieCarousel title={t('popularMovies')} query="comedy" />
         </div>
     </main>
   );

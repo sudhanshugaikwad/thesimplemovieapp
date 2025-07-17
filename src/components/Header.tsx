@@ -7,9 +7,11 @@ import { SidebarTrigger } from './ui/sidebar';
 import { handleSearch } from '@/app/actions';
 import { usePathname } from 'next/navigation';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function Header() {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -24,7 +26,7 @@ export function Header() {
             <Input
               type="search"
               name="query"
-              placeholder="Search for movies..."
+              placeholder={t('searchPlaceholder')}
               className="pl-8 sm:w-64 md:w-80"
             />
           </form>

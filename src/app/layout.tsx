@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <FavoritesProvider>
-            <div className="relative flex min-h-screen flex-col">
+            <div className="relative flex min-h-screen flex-col bg-background">
               <Navbar />
               <div className="flex-1">{children}</div>
             </div>

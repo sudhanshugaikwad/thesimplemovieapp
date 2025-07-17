@@ -5,8 +5,11 @@ import { Input } from '@/components/ui/input';
 import { ThemeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from './ui/sidebar';
 import { handleSearch } from '@/app/actions';
+import { usePathname } from 'next/navigation';
 
 export function Header() {
+  const pathname = usePathname();
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -15,6 +18,7 @@ export function Header() {
         </div>
         <div className="flex-1">
           <form action={handleSearch} className="relative w-full max-w-md">
+             <input type="hidden" name="from" value={pathname} />
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"

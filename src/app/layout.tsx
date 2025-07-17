@@ -49,10 +49,10 @@ export default function RootLayout({
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <ActiveLink href="/">
-                      <SidebarMenuButton tooltip="Home">
-                        <Home />
-                        <span>Home</span>
-                      </SidebarMenuButton>
+                        <SidebarMenuButton tooltip="Home">
+                          <Home />
+                          <span>Home</span>
+                        </SidebarMenuButton>
                     </ActiveLink>
                   </SidebarMenuItem>
                   <SidebarMenuItem>

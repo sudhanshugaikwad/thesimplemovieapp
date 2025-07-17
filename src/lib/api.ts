@@ -3,9 +3,13 @@ import type { MovieSearchResult, MovieDetails } from '@/types';
 const API_KEY = process.env.NEXT_PUBLIC_OMDB_API_KEY || '2edba679';
 const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
-export async function searchMovies(query: string, page: number = 1): Promise<MovieSearchResult> {
+export async function searchMovies(query: string, page: number = 1, type?: 'movie' | 'series'): Promise<MovieSearchResult> {
   try {
-    const response = await fetch(`${API_URL}&s=${query}&page=${page}`);
+    let url = `${API_URL}&s=${query}&page=${page}`;
+    if (type) {
+        url += `&type=${type}`;
+    }
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

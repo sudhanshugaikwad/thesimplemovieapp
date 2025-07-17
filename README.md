@@ -1,4 +1,4 @@
-# Firebase Studio
+# The Simple Movie App
 
 This is a NextJS starter in Firebase Studio.
 

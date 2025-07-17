@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 type ActiveLinkProps = LinkProps & {
   children: React.ReactNode;
   className?: string;
+  asChild?: boolean;
 }
 
-export function ActiveLink({ children, className, ...props }: ActiveLinkProps) {
+export function ActiveLink({ children, className, asChild, ...props }: ActiveLinkProps) {
   const pathname = usePathname()
   const isActive = pathname === props.href
 

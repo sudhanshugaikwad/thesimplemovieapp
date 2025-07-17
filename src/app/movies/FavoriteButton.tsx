@@ -24,9 +24,9 @@ export function FavoriteButton({ movie }: { movie: Movie }) {
   }
 
   return (
-    <Button onClick={handleFavoriteToggle} variant="outline" size="lg">
+    <Button onClick={handleFavoriteToggle} variant="secondary" size="lg">
         <Heart className={cn("mr-2 h-5 w-5", isFav && "fill-red-500 text-red-500")} />
-        {isFav ? "Favorited" : "Add to Favorites"}
+        {isFav ? "Favorited" : "Favorite"}
     </Button>
   )
 }

@@ -4,46 +4,12 @@ import { getMovieById } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, Star, Share2, Bot, Film, Users, Trophy, Pencil, Clapperboard, MonitorPlay, Tv } from 'lucide-react';
+import { Calendar, Clock, Star, Share2, Bot, Users, Trophy, Pencil, Clapperboard, MonitorPlay, Tv } from 'lucide-react';
 import { FavoriteButton } from '../FavoriteButton';
 import { getAiCriticReview } from '@/ai/flows/movie-critic-flow';
 import { findMovieTrailer } from '@/ai/flows/movie-trailer-flow';
 import { format } from 'date-fns';
 import { Separator } from '@/components/ui/separator';
-
-async function AiCriticReview({ title, plot }: { title: string; plot: string }) {
-    const reviewData = await getAiCriticReview({ title, plot });
-    if (!reviewData || !reviewData.review) return null;
-    return (
-        <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-2 flex items-center"><Bot className="mr-2" /> AI Critic's Take</h3>
-            <p className="text-foreground/80 italic">&ldquo;{reviewData.review}&rdquo;</p>
-        </div>
-    );
-}
-
-async function MovieTrailerSection({ title, year }: { title: string, year: string }) {
-  const trailerInfo = await findMovieTrailer({ title, year });
-  if (!trailerInfo?.youtubeVideoId) return null;
-
-  return (
-    <div className="mt-8">
-      <h3 className="text-xl font-semibold mb-4 flex items-center"><MonitorPlay className="mr-2" /> Trailer</h3>
-      <div className="aspect-video">
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${trailerInfo.youtubeVideoId}`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="rounded-lg border-0"
-        ></iframe>
-      </div>
-    </div>
-  )
-}
-
 
 export default async function MovieDetailsPage({ params }: { params: { id: string } }) {
   const movie = await getMovieById(params.id);
@@ -52,6 +18,12 @@ export default async function MovieDetailsPage({ params }: { params: { id: strin
     notFound();
   }
   
+  // Fetch AI review and trailer in parallel
+  const [reviewData, trailerInfo] = await Promise.all([
+    getAiCriticReview({ title: movie.Title, plot: movie.Plot }),
+    findMovieTrailer({ title: movie.Title, year: movie.Year })
+  ]);
+
   const movieForFav = {
     imdbID: movie.imdbID,
     Title: movie.Title,
@@ -81,7 +53,7 @@ export default async function MovieDetailsPage({ params }: { params: { id: strin
         </div>
 
         {/* Content */}
-        <div className="container -mt-[20vh] relative z-10">
+        <div className="container -mt-[20vh] relative z-10 pb-8">
             <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8">
                 {/* Left Column: Poster & Buttons */}
                 <div className="flex-shrink-0">
@@ -135,16 +107,32 @@ export default async function MovieDetailsPage({ params }: { params: { id: strin
                       <div className="flex"><strong className="w-24 flex-shrink-0 flex items-center"><Trophy className="mr-2 h-4 w-4" /> Awards</strong> <span className="text-muted-foreground">{movie.Awards}</span></div>
                   </div>
               </div>
-               <div>
-                  <React.Suspense fallback={<p>Loading AI Critic...</p>}>
-                      <AiCriticReview title={movie.Title} plot={movie.Plot} />
-                  </React.Suspense>
+              <div>
+                {reviewData && reviewData.review && (
+                  <div className="mt-8 md:mt-0">
+                      <h3 className="text-xl font-semibold mb-2 flex items-center"><Bot className="mr-2" /> AI Critic's Take</h3>
+                      <p className="text-foreground/80 italic">&ldquo;{reviewData.review}&rdquo;</p>
+                  </div>
+                )}
               </div>
             </div>
 
-            <React.Suspense fallback={<p>Finding trailer...</p>}>
-              <MovieTrailerSection title={movie.Title} year={movie.Year} />
-            </React.Suspense>
+            {trailerInfo && trailerInfo.youtubeVideoId && (
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold mb-4 flex items-center"><MonitorPlay className="mr-2" /> Trailer</h3>
+                <div className="aspect-video">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${trailerInfo.youtubeVideoId}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="rounded-lg border-0"
+                  ></iframe>
+                </div>
+              </div>
+            )}
         </div>
     </div>
   );

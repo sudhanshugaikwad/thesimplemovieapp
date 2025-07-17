@@ -21,8 +21,13 @@ const MovieCriticOutputSchema = z.object({
 });
 export type MovieCriticOutput = z.infer<typeof MovieCriticOutputSchema>;
 
-export async function getAiCriticReview(input: MovieCriticInput): Promise<MovieCriticOutput> {
-  return movieCriticFlow(input);
+export async function getAiCriticReview(input: MovieCriticInput): Promise<MovieCriticOutput | null> {
+  try {
+    return await movieCriticFlow(input);
+  } catch (error) {
+    console.error('Error getting AI critic review:', error);
+    return null;
+  }
 }
 
 const prompt = ai.definePrompt({

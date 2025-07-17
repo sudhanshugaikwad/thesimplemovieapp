@@ -26,8 +26,13 @@ const MovieTrailerOutputSchema = z.object({
 });
 export type MovieTrailerOutput = z.infer<typeof MovieTrailerOutputSchema>;
 
-export async function findMovieTrailer(input: MovieTrailerInput): Promise<MovieTrailerOutput> {
-  return movieTrailerFlow(input);
+export async function findMovieTrailer(input: MovieTrailerInput): Promise<MovieTrailerOutput | null> {
+  try {
+    return await movieTrailerFlow(input);
+  } catch(error) {
+    console.error('Error finding movie trailer:', error);
+    return null;
+  }
 }
 
 const prompt = ai.definePrompt({

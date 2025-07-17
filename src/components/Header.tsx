@@ -1,16 +1,10 @@
 "use client"
 
-import { redirect } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { ThemeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from './ui/sidebar';
-
-async function handleSearch(formData: FormData) {
-  'use server';
-  const query = formData.get('query') as string;
-  redirect(`/?query=${encodeURIComponent(query)}`);
-}
+import { handleSearch } from '@/app/actions';
 
 export function Header() {
   return (

@@ -51,7 +51,7 @@ export default function RootLayout({
                   </SidebarHeader>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <ActiveLink href="/">
+                      <ActiveLink href="/" asChild>
                           <SidebarMenuButton tooltip="Home">
                             <Home />
                             <span>Home</span>
@@ -59,7 +59,7 @@ export default function RootLayout({
                       </ActiveLink>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                       <ActiveLink href="/movies">
+                       <ActiveLink href="/movies" asChild>
                           <SidebarMenuButton tooltip="Movies">
                             <Clapperboard />
                             <span>Movies</span>
@@ -67,7 +67,7 @@ export default function RootLayout({
                       </ActiveLink>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                       <ActiveLink href="/series">
+                       <ActiveLink href="/series" asChild>
                           <SidebarMenuButton tooltip="TV Series">
                             <Tv />
                             <span>TV Series</span>
@@ -75,7 +75,7 @@ export default function RootLayout({
                       </ActiveLink>
                     </SidebarMenuItem>
                      <SidebarMenuItem>
-                       <ActiveLink href="/search">
+                       <ActiveLink href="/search" asChild>
                           <SidebarMenuButton tooltip="Search">
                             <Search />
                             <span>Search</span>
@@ -86,7 +86,7 @@ export default function RootLayout({
                   <SidebarFooter>
                     <SidebarMenu>
                       <SidebarMenuItem>
-                        <ActiveLink href="/favorites">
+                        <ActiveLink href="/favorites" asChild>
                             <SidebarMenuButton tooltip="Favorites">
                               <Star />
                               <span>Favorites</span>

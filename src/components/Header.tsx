@@ -6,6 +6,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from './ui/sidebar';
 import { handleSearch } from '@/app/actions';
 import { usePathname } from 'next/navigation';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Header() {
   const pathname = usePathname();
@@ -29,6 +30,7 @@ export function Header() {
           </form>
         </div>
         <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <ThemeToggle />
             <div className="md:hidden">
               <SidebarTrigger />

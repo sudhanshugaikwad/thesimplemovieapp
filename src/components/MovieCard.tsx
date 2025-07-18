@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Heart, Star } from "lucide-react"
+import { Heart } from "lucide-react"
 import type { Movie } from "@/types"
 import { cn } from "@/lib/utils"
 import { useFavorites } from "@/hooks/useFavorites"
@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "./ui/skeleton"
+import { useTranslation } from "@/hooks/useTranslation"
 
 interface MovieCardProps {
   movie: Movie
@@ -18,6 +19,7 @@ interface MovieCardProps {
 export function MovieCard({ movie }: MovieCardProps) {
   const { toast } = useToast()
   const { isFavorite, addFavorite, removeFavorite } = useFavorites()
+  const { t } = useTranslation();
   
   const isFav = isFavorite(movie.imdbID)
 
@@ -26,10 +28,10 @@ export function MovieCard({ movie }: MovieCardProps) {
 
     if (isFav) {
       await removeFavorite(movie.imdbID)
-      toast({ title: "Removed from favorites." })
+      toast({ title: t('removedFromFavorites') })
     } else {
       await addFavorite(movie)
-      toast({ title: "Added to favorites." })
+      toast({ title: t('addedToFavorites') })
     }
   }
 

@@ -28,7 +28,7 @@ export function Pagination({ totalResults, resultsPerPage = 10 }: PaginationProp
   }
 
   return (
-    <div className="flex items-center justify-center space-x-2 py-4">
+    <div className="flex items-center justify-center space-x-2 py-8">
       <Button
         variant="outline"
         size="icon"

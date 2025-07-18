@@ -13,8 +13,8 @@ export default function FavoritesPage() {
     return (
         <div className="container py-8">
             <h1 className="text-4xl font-bold mb-8 text-center font-headline">{t('myFavorites')}</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                {[...Array(5)].map((_, i) => <MovieCardSkeleton key={i} />)}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+                {[...Array(8)].map((_, i) => <MovieCardSkeleton key={i} />)}
             </div>
         </div>
     )
@@ -32,7 +32,7 @@ export default function FavoritesPage() {
     <main className="container py-8 animate-fade-in">
       <h1 className="text-4xl font-bold mb-8 text-center font-headline">{t('myFavorites')}</h1>
       {favoriteMovies.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
           {favoriteMovies.map((movie) => (
             <MovieCard key={movie.imdbID} movie={movie} />
           ))}

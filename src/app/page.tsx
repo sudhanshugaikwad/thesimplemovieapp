@@ -39,15 +39,15 @@ function MovieCarousel({ title, query }: { title: string, query: string }) {
         }}
         className="w-full"
       >
-        <CarouselContent className="-ml-4">
+        <CarouselContent className="-ml-2">
           {movies.map((movie) => (
-            <CarouselItem key={movie.imdbID} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6 pl-4">
+            <CarouselItem key={movie.imdbID} className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8 pl-2">
               <MovieCard movie={movie} />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="ml-14" />
-        <CarouselNext className="mr-14" />
+        <CarouselPrevious className="ml-12" />
+        <CarouselNext className="mr-12" />
       </Carousel>
     </section>
   )

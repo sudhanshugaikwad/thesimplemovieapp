@@ -85,3 +85,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .spotlight-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spotlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      400px circle at var(--spotlight-x) var(--spotlight-y),
+      hsla(var(--primary), 0.2),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+
+  .spotlight-card > * {
+    position: relative;
+    z-index: 1;
+  }
+}
